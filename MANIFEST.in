@@ -1,0 +1,4 @@
+graft flaskr/images
+graft flaskr/templates
+graft flaskr/data
+global-exclude *.pyc
