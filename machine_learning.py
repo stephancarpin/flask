@@ -33,6 +33,20 @@ def perform_task():
     x_test=sc_x.transform(x_test)
     x_train
 
+    plt.scatter(data.iloc[:,0],data.iloc[:,2])
+    plt.xlabel('Count')
+    plt.ylabel('Density')
+    plt.title('Scatter plot')
+
+    # Saving the figure.
+    plt.savefig("./images/output3.jpg")
+
+    # Saving figure by changing parameter values
+    plt.savefig("./images/output2", facecolor='y', bbox_inches="tight",
+                                    pad_inches=0.3, transparent=True)
+
+
+
     # Creating data
     year = ['2010', '2002', '2004', '2006', '2008']
     production = [25, 15, 35, 30, 10]
@@ -41,10 +55,10 @@ def perform_task():
     plt.bar(year, production)
 
     # Saving the figure.
-    plt.savefig("./data/output.jpg")
+    plt.savefig("./images/output.jpg")
 
     # Saving figure by changing parameter values
-    plt.savefig("./data/output1", facecolor='y', bbox_inches="tight",
+    plt.savefig("./images/output1", facecolor='y', bbox_inches="tight",
                                 pad_inches=0.3, transparent=True)
 
 
