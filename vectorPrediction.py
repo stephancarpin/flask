@@ -69,12 +69,12 @@ def perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)
 	print(classification_report(y, cls.predict(X)))
 
 
-	Xnew=np.array([color1,color2,color3,color4,color5,color6,color7,color8,color9])
-	arr_2d= np.reshape(Xnew,[1,9])
+	X_input_test   = np.array([color1,color2,color3,color4,color5,color6,color7,color8,color9])
+	arr_2d         = np.reshape(X_input_test,[1,9])
 	# print(arr_2d)
 	prediction= cls.predict(arr_2d)
 	print(prediction)
-	return prediction
+	return [prediction,x]
 	
 
 

@@ -41,7 +41,7 @@ def index():
 
 
 
-        prediction_value = perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)
+        prediction_value= perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)[0]
         if prediction_value[0] == 0:
           my_message= "Not Critical"
           print("Not Critical")
