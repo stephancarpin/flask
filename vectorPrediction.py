@@ -1,3 +1,4 @@
+
 import numpy as np
 import pandas as pd
 from sklearn.compose import ColumnTransformer
@@ -8,7 +9,7 @@ from pandas import read_csv
 import matplotlib
 import matplotlib.pyplot as plt
 from sklearn.svm import SVC
-import numpy as np
+
 from sklearn.metrics import accuracy_score
 from sklearn.metrics import classification_report, confusion_matrix
 # For data manipulation
@@ -17,26 +18,20 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn
 
-plt.switch_backend('Agg')
-print("Using:",matplotlib.get_backend())
-
-def perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9):
+def perform_task_SVM(array_inputs,data):
 	# Machine learning classification
+	
 	
     
 
 	# Step 2: Fetch data
+	data = data.dropna()
 
-
-	data= pd.read_csv('./data/critical_colours_grouped.csv',header=0)
-
-	data= data.dropna()
-
-	y = np.array(data['Class']);
+	y = np.array(data['Class'])
 
 	x = data.loc[:, data.columns != 'Class']
-	y = np.array(data['Class']);
-	X = np.array(x);
+	y = np.array(data['Class'])
+	X = np.array(x)
 	split_percentage = 0.7
 	split = int(split_percentage*len(data))
 	# Train data set
@@ -69,9 +64,9 @@ def perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)
 	print(classification_report(y, cls.predict(X)))
 
 
-	X_input_test   = np.array([color1,color2,color3,color4,color5,color6,color7,color8,color9])
+	X_input_test   = np.array(array_inputs)
 	arr_2d         = np.reshape(X_input_test,[1,9])
-	# print(arr_2d)
+	print(arr_2d)
 	prediction= cls.predict(arr_2d)
 	print(prediction)
 	return [prediction,x]

@@ -1,8 +1,16 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
 from vectorPrediction import *
+from lrlime import *
 from time import sleep
 import os, shutil
 from threading import Thread
+import pandas as pd
+
+
+
+
+plt.switch_backend('Agg')
+print("Using:",matplotlib.get_backend())
 
 
 app = Flask(__name__,static_folder='images',)
@@ -11,7 +19,11 @@ app.config['TESTING'] = True
 app.testing= True
 app.config['SECRET_KEY'] = 'b1808f24613321f9007f0e8b31759bc269e8fc6a6a2fb51d'
 
+csv_data= pd.read_csv('./data/CriticalColours.csv',header=0)
 
+headers = csv_data.columns[0:19]
+print("headers")
+print(headers)
 folder = './images/'
 for filename in os.listdir(folder):
     file_path = os.path.join(folder, filename)
@@ -24,31 +36,29 @@ for filename in os.listdir(folder):
         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
-@app.route('/', methods=('GET', 'POST'))
+@app.route('/', methods=('GET', 'POST') )
 def index():
     my_message="null"
-   
+    array_inputs=[]
     if request.method == 'POST':
-        color1   = request.form['color1']
-        color2   = request.form['color2']
-        color3   = request.form['color3']
-        color4   = request.form['color4']
-        color5   = request.form['color5']
-        color6   = request.form['color6']
-        color7   = request.form['color7']
-        color8   = request.form['color8']
-        color9   = request.form['color9']
 
+        for index, h in enumerate(headers):
+            print(index,h)
+            if len(request.form[h]):
+                array_inputs.append(request.form[h])
+            else:
+                array_inputs.append(0)
+                
+        # prediction_value = perform_task_LR(array_inputs,csv_data)[0]
+        prediction_value = perform_task_LR(array_inputs,csv_data)[0]
 
-
-        prediction_value= perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)[0]
         if prediction_value[0] == 0:
-          my_message= "Not Critical"
+          my_message  = "Not Critical"
           print("Not Critical")
         elif prediction_value[0] == 1:
-          my_message= "Critical"
+          my_message  = "Critical"
           print("Critical Color")
         else:
           print("Weird Result")
 
-    return render_template('index.html', messages=my_message)
+    return render_template('index.html', messages=my_message,html_headers= headers)

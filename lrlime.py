@@ -19,15 +19,19 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report, confusion_matrix
+import matplotlib
+import matplotlib.pyplot as plt
 
 plt.switch_backend('Agg')
 print("Using:",matplotlib.get_backend())
 
-def perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9):
+def perform_task_LR(array_inputs,df):
+    #FROM HTML
+    print(array_inputs)
     # Machine learning classification
     """READ DATA"""
 
-    df = pd.read_csv("./data/critical_colours_grouped.csv")
+    
 
     df.head()
 
@@ -74,45 +78,23 @@ def perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)
     for i in range(2):
         for j in range(2):
             ax.text(j, i, cm[i, j], ha='center', va='center', color='red')
-    plt.show()
+    plt.savefig("./images/confusion_matrix.jpg")
 
     print(classification_report(Y,model_logreg.predict(X)))
 
     """PREDICT NEW DATA"""
 
-    new_colour = np.array(X_test.iloc[2]).reshape(1,-1)
-
-    model_logreg.predict(new_colour)
+    #new_colour = np.array(X_test.iloc[2]).reshape(1,-1)
+    new_colour = np.array(X_test.iloc[10]).reshape(1,-1)
+    print("X_test.iloc[10]")
+    print(new_colour)
+    X_input_test = np.array(array_inputs)
+    X_input_test = X_input_test.astype(np.float64)
+    arr_2d = np.reshape(X_input_test,[1,19])
+    return([model_logreg.predict(arr_2d),X_input_test])
 
     """INTERPRETE PREDICTION"""
 
 
 
-    import lime
-    import lime.lime_tabular
-
-    feature_names = ['EverzolYellow3RS', 'EverzolYellowLX', 'EverzolYellowEDR', 'EverzolYellowED', 'EverzolYellowED2G', 'EverzolRedLX', 'EverzolRedF2B', 'EverzolRedED3B', 'EverzolRedED', 'EverzolBlueLX', 'EverzolBlueBRF', 'EverzolBlueEDG', 'EverzolNavyBlueFBN', 'EverzolNavyED', 'RemazolRoyalRGB', 'LevafixBlueCA', 'EverzolOrangeED2R', 'EverzolTurquoise133%', 'EverzolBlackEDR']
-
-    #explainer = lime.lime_tabular.LimeTabularExplainer(X_train.values, discretize_continuous=True)
-    #explainer = lime.lime_tabular.LimeTabularExplainer(X_train.values, feature_names=feature_names, class_names=class_names, discretize_continuous=True)
-
-    #exp = explainer.explain_instance(X_test.iloc[2],model_logreg.predict_proba,num_features=19,top_labels=1)
-
-    import lime
-    from lime import lime_tabular
-
-    explainer = lime_tabular.LimeTabularExplainer(
-        training_data=np.array(X_train),
-        feature_names=X_train.columns,
-        class_names=['non_critical', 'critical'],
-        mode='classification'
-    )
-
-    exp = explainer.explain_instance(
-        data_row=X_test.iloc[1], 
-        predict_fn=model_logreg.predict_proba
-    )
-
-    exp.show_in_notebook(show_table=True)
-
-    exp.show_in_notebook(show_table=True, show_all=False)
+    

@@ -8,53 +8,31 @@
          <!-- <h5 class="card-title">Logistic Regression Algorithm</h5> -->
          <label for="title">Please Input Color grams</label>
            <form method="post">
-              <div class="input-group mb-3">
+            
+                 
+                     {%for h in html_headers%}
+                     <div class="input-group mb-3">
+  
+                            <input type="text"   class="form-control sm" name = {{h}}
+                            placeholder= {{h}}
+                            value=""></input>
+                     </div>
+                            
+                     {%endfor%}
+                  
                      
-                     <br>
-                     <input type="text"  class="form-control" name="color1"
-                            placeholder="color1"
-                            value="{{ request.form['color1'] }}"></input>
-                 
-                     <input type="text"  class="form-control" name="color2"
-                            placeholder="color2"
-                            value="{{ request.form['color2'] }}"></input>
-                   
-                     <input type="text"  class="form-control" name="color3"
-                            placeholder="color3"
-                            value="{{ request.form['color3'] }}"></input>
-                 
-                     <input type="text"   class="form-control" name="color4"
-                            placeholder="color4"
-                            value="{{ request.form['color4'] }}"></input>
-                  
-                     <input type="text"   class="form-control" name="color5"
-                            placeholder="color5"
-                            value="{{ request.form['color5'] }}"></input>
-                   
-                      <input type="text"   class="form-control" name="color6"
-                            placeholder="color6"
-                            value="{{ request.form['color6'] }}"></input>
-                    
-                      <input type="text"  class="form-control" name="color7"
-                            placeholder="color7"
-                            value="{{ request.form['color7'] }}"></input>
-                   
-                      <input type="text"  class="form-control" name="color8"
-                            placeholder="color8"
-                            value="{{ request.form['color8'] }}"></input>
-                  
-                     <input type="text"  class="form-control" name="color9"
-                            placeholder="color9"
-                            value="{{ request.form['color9'] }}"></input>
-                     <input class="btn btn-primary" type="submit"></button>
+                     
+                     
 
-              </div>
+        
+              <input class="btn btn-primary" type="submit"></button>
              
          
            
             
-              <h1>Prediction : {{ messages }}</h1>
+              
           </form>
+          <h1>Prediction : {{ messages }}</h1>
        </div>
 </div>
     
