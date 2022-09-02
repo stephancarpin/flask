@@ -1,40 +1,46 @@
 {% extends 'base.html' %}
 
 {% block content %}
-   
-<div class="card " style="width:50%">
-      
-       <div class="card-body justify-content-center">
-         <!-- <h5 class="card-title">Logistic Regression Algorithm</h5> -->
-         <label for="title">Please Input Color grams</label>
-           <form method="post">
-            
-                 
-                     {%for h in html_headers%}
-                     <div class="input-group mb-3">
-  
-                            <input type="text"   class="form-control sm" name = {{h}}
-                            placeholder= {{h}}
-                            value=""></input>
-                     </div>
-                            
-                     {%endfor%}
-                  
-                     
-                     
-                     
 
-        
-              <input class="btn btn-primary" type="submit"></button>
+<div class="card " style="width:30%">
+       <form method="post">
+              <div class="card-header">
+                     <label for="title">Critical Color Predictions</label>
+                    
+              </div>
              
+              <div class="card-body justify-content-center">
+                <!-- <h5 class="card-title">Logistic Regression Algorithm</h5> -->
+                
+                  
+                {%for h in html_headers%}
+                   
+                <div class="input-group ">
+                           
+                            
          
-           
-            
-              
-          </form>
-          <h1>Prediction : {{ messages }}</h1>
-       </div>
+                                   <input type="text"   class="form-control sm" name = {{h}}
+                                   placeholder= {{h}}
+                                   value="{{request.form[h]}}"></input>
+                           
+                                   
+                           
+                     </div>
+               {%endfor%}
+              </div>
+              <div class="card-footer text-muted">
+                  
+                     <input class="btn btn-primary" type="submit">  
+                         <span >    Prediction : {{ messages }}</span>
+                     </input>
+                   
+              </div>
+
+       </form>
+       
 </div>
+
+
     
    
 {% endblock %}
