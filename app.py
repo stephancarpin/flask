@@ -2,12 +2,13 @@ from flask import Flask, render_template, request, url_for, flash, redirect
 from vectorPrediction import *
 from time import sleep
 import os, shutil
-
-
-
 from threading import Thread
+
+
 app = Flask(__name__,static_folder='images',)
 app.config["CACHE_TYPE"] = "null"
+app.config['TESTING'] = True
+app.testing= True
 app.config['SECRET_KEY'] = 'b1808f24613321f9007f0e8b31759bc269e8fc6a6a2fb51d'
 
 
@@ -23,19 +24,10 @@ for filename in os.listdir(folder):
         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
-
-
-
-messages = [{'title': 'Message One',
-             'content': 'Message One Content'},
-            {'title': 'Message Two',
-             'content': 'Message Two Content'}
-            ]
-
 @app.route('/', methods=('GET', 'POST'))
 def index():
-    my_message='null';
-    print('here')
+    my_message="null"
+   
     if request.method == 'POST':
         color1   = request.form['color1']
         color2   = request.form['color2']
@@ -59,35 +51,4 @@ def index():
         else:
           print("Weird Result")
 
-        
-
-
-        
-
-    return render_template('criticalcolor.html', messages=my_message)
-
-
-
-
-
-@app.route('/create/', methods=('GET', 'POST'))
-def create():
-    if request.method == 'POST':
-        title   = request.form['title']
-        content = request.form['content']
-
-
-
-
-        perform_task()
-
-
-        if not title:
-            flash('Title is required!')
-        elif not content:
-            flash('Content is required!')
-        else:
-            messages.append({'title': title, 'content': content})
-            return redirect(url_for('index'))
-
-    return render_template('create.html')
+    return render_template('index.html', messages=my_message)

@@ -10,7 +10,7 @@
             background-color: #f3f3f3
         }
         nav a {
-            color: #d64161;
+            color: #1308e2;
             font-size: 3em;
             margin-left: 50px;
             text-decoration: none;
@@ -21,19 +21,19 @@
 </head>
 <body>
 <div class="container-fluid">
+     <div class="row">
+       
+            <h1 href="{{ url_for('index') }}">Critical Color Predictions</a>
+        
+    </div>
 
-<nav>
-    <a href="{{ url_for('index') }}">FlaskApp</a>
-    <a href="{{ url_for('create') }}">Create</a>
-    <a href="#">About</a>
-</nav>
-<hr>
-<div class="content">
-    {% for message in get_flashed_messages() %}
-    <div class="alert">{{ message }}</div>
-    {% endfor %}
-    {% block content %} {% endblock %}
-</div>
+
+    <div class="row ">
+        <div class="content">
+            {% block content %} {% endblock %}
+        </div>
+
+    </div>
 </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
