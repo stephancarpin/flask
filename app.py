@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for, flash, redirect
-from machine_learning import *
+from vectorPrediction import *
 from time import sleep
 import os, shutil
 
@@ -32,9 +32,40 @@ messages = [{'title': 'Message One',
              'content': 'Message Two Content'}
             ]
 
-@app.route('/')
+@app.route('/', methods=('GET', 'POST'))
 def index():
-    return render_template('index.html', messages=messages)
+    my_message='null';
+    print('here')
+    if request.method == 'POST':
+        color1   = request.form['color1']
+        color2   = request.form['color2']
+        color3   = request.form['color3']
+        color4   = request.form['color4']
+        color5   = request.form['color5']
+        color6   = request.form['color6']
+        color7   = request.form['color7']
+        color8   = request.form['color8']
+        color9   = request.form['color9']
+
+
+
+        prediction_value = perform_task(color1,color2,color3,color4,color5,color6,color7,color8,color9)
+        if prediction_value[0] == 0:
+          my_message= "Not Critical"
+          print("Not Critical")
+        elif prediction_value[0] == 1:
+          my_message= "Critical"
+          print("Critical Color")
+        else:
+          print("Weird Result")
+
+        
+
+
+        
+
+    return render_template('criticalcolor.html', messages=my_message)
+
 
 
 

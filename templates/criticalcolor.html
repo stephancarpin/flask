@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block content %}
+   
+    <h1>{% block title %} Critical Color  {% endblock %}</h1>
+    <form method="post">
+        <label for="title">Please Input Color grams</label>
+        <br>
+        <input type="text" name="color1"
+               placeholder="color1"
+               value="{{ request.form['color1'] }}"></input>
+        <br>
+        <input type="text" name="color2"
+               placeholder="color2"
+               value="{{ request.form['color2'] }}"></input>
+        <br>
+        <input type="text" name="color3"
+               placeholder="color3"
+               value="{{ request.form['color3'] }}"></input>
+        <br>
+        <input type="text" name="color4"
+               placeholder="color4"
+               value="{{ request.form['color4'] }}"></input>
+        <br>
+        <input type="text" name="color5"
+               placeholder="color5"
+               value="{{ request.form['color5'] }}"></input>
+        <br>
+         <input type="text" name="color6"
+               placeholder="color6"
+               value="{{ request.form['color6'] }}"></input>
+        <br>
+         <input type="text" name="color7"
+               placeholder="color7"
+               value="{{ request.form['color7'] }}"></input>
+        <br>
+         <input type="text" name="color8"
+               placeholder="color8"
+               value="{{ request.form['color8'] }}"></input>
+        <br>
+        <input type="text" name="color9"
+               placeholder="color9"
+               value="{{ request.form['color9'] }}"></input>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+    <p>output:{{ messages }}</p>
+{% endblock %}
