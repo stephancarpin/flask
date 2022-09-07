@@ -2,43 +2,57 @@
 
 {% block content %}
 
-<div class="card " style="width:30%">
-       <form method="post">
-              <div class="card-header">
-                     <label for="title">Critical Color Predictions</label>
-                    
+
+
+<div class="row">
+       <div class="col-6" >
+              <div class="card" style="height:100%">
+                     <form method="post">
+                            <div class="card-header">
+                                   <label for="title">Critical Color Predictions</label>
+                                  
+                            </div>
+                           
+                            <div class="card-body justify-content-center">
+                              <!-- <h5 class="card-title">Logistic Regression Algorithm</h5> -->
+                              
+                                
+                              {%for h in html_headers%}
+                                 
+                              <div class="input-group ">
+                                   <input type="text"   class="form-control sm" name = {{h}}
+                                        placeholder= {{h}}
+                                        value="{{request.form[h]}}">
+                                   </input>
+                                         
+                                                 
+                             </div>
+                             {%endfor%}
+                            </div>
+                            <div class="card-footer text-muted">
+                                
+                                   <input class="btn btn-primary" type="submit">  
+                                       <span >    Prediction : {{ messages }}</span>
+                                   </input>
+                                 
+                            </div>
+                            <div>
+                                   <!-- <img id ='confusion_matrix' src="" width="100%" height="100%"> -->
+                            </div>
+                     </form>
+                     
+              </div>
+       </div>
+       <div class="col-6">
+
+
+              <div class="card" style="height:100%">
+                     <iframe style="height: 100%" src="/assets/images/explainer.html" title="description"></iframe>
               </div>
              
-              <div class="card-body justify-content-center">
-                <!-- <h5 class="card-title">Logistic Regression Algorithm</h5> -->
-                
-                  
-                {%for h in html_headers%}
-                   
-                <div class="input-group ">
-                           
-                            
-         
-                                   <input type="text"   class="form-control sm" name = {{h}}
-                                   placeholder= {{h}}
-                                   value="{{request.form[h]}}"></input>
-                           
-                                   
-                           
-                     </div>
-               {%endfor%}
-              </div>
-              <div class="card-footer text-muted">
-                  
-                     <input class="btn btn-primary" type="submit">  
-                         <span >    Prediction : {{ messages }}</span>
-                     </input>
-                   
-              </div>
+       </div>
+     </div>
 
-       </form>
-       
-</div>
 
 
     

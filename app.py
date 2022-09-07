@@ -1,3 +1,5 @@
+
+
 from flask import Flask, render_template, request, url_for, flash, redirect
 from vectorPrediction import *
 from lrlime import *
@@ -10,34 +12,38 @@ import math
 
 
 
+# plt.switch_backend('Agg')
+# print("Using:",matplotlib.get_backend())
 
-plt.switch_backend('Agg')
-print("Using:",matplotlib.get_backend())
 
-
-app = Flask(__name__,static_folder='images',)
+app = Flask(__name__,static_folder='assets')
 app.config["CACHE_TYPE"] = "null"
 app.config['TESTING'] = True
 app.testing= True
 app.config['SECRET_KEY'] = 'b1808f24613321f9007f0e8b31759bc269e8fc6a6a2fb51d'
+
+
+
+
+
 
 csv_data= pd.read_csv('./data/CriticalColours.csv',header=0)
 
 headers = csv_data.columns[0:19]
 
 
-print("headers")
+
 print(headers)
-folder = './images/'
-for filename in os.listdir(folder):
-    file_path = os.path.join(folder, filename)
-    try:
-        if os.path.isfile(file_path) or os.path.islink(file_path):
-            os.unlink(file_path)
-        elif os.path.isdir(file_path):
-            shutil.rmtree(file_path)
-    except Exception as e:
-        print('Failed to delete %s. Reason: %s' % (file_path, e))
+# folder = './assets/images/'
+# for filename in os.listdir(folder):
+#     file_path = os.path.join(folder, filename)
+#     try:
+#         if os.path.isfile(file_path) or os.path.islink(file_path):
+#             os.unlink(file_path)
+#         elif os.path.isdir(file_path):
+#             shutil.rmtree(file_path)
+#     except Exception as e:
+#         print('Failed to delete %s. Reason: %s' % (file_path, e))
 
 
 @app.route('/', methods=('GET', 'POST') )
