@@ -57,7 +57,9 @@ def initializtion():
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=7)
 
     #to save it
-    np.save('xtrain.npy', X_train)
+    print('type of xtrain')
+
+    X_train.to_json('./data/X_train.json')
 
     
     
@@ -99,7 +101,7 @@ def initializtion():
 
 """PREDICT NEW DATA"""
 def perform_task_LR(array_inputs,df):
-    x_train= initializtion()[0]
+    
 
     #new_colour = np.array(X_test.iloc[2]).reshape(1,-1)
     #new_colour = np.array(X_test.iloc[10]).reshape(1,-1)
@@ -107,48 +109,16 @@ def perform_task_LR(array_inputs,df):
     #print(new_colour)
     X_input_test = np.array(array_inputs)
     X_input_test = X_input_test.astype(np.float64)
-    arr_2d = np.reshape(X_input_test,[1,19])
+    arr_2d       = np.reshape(X_input_test,[1,19])
     
    
 
     import lime
     import lime.lime_tabular
     feature_names = ['EverzolYellow3RS', 'EverzolYellowLX', 'EverzolYellowEDR', 'EverzolYellowED', 'EverzolYellowED2G', 'EverzolRedLX', 'EverzolRedF2B', 'EverzolRedED3B', 'EverzolRedED', 'EverzolBlueLX', 'EverzolBlueBRF', 'EverzolBlueEDG', 'EverzolNavyBlueFBN', 'EverzolNavyED', 'RemazolRoyalRGB', 'LevafixBlueCA', 'EverzolOrangeED2R', 'EverzolTurquoise133%', 'EverzolBlackEDR']
-    class_names   = ['0','1']
-
-    # data  =  pd.DataFrame(np.load('xtrain.npy'))
-    
-    
-  
-
-    #print(new_data.values)
-
-    df= pd.read_csv('./data/CriticalColours.csv',header=0)
-
-    headers = df.columns[0:19]
-
-    # Machine learning classification
-    """READ DATA"""
-
-
-
-    df.head()
-
-    """DEFINE FEATURES AND TARGET"""
-
-    X = df.loc[:, df.columns != 'Class']
-
-    Y = df.iloc[:,-1]
-
-    class_names = Y.unique()
-
-    """SPLIT TRAIN AND TEST DATA"""
-
-    X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=7)
-   
-    
-    explainer = lime.lime_tabular.LimeTabularExplainer(X_train.values, feature_names=feature_names, class_names=class_names, discretize_continuous=True)
-    exp = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
+    saved_x_train = pd.read_json('./data/X_train.json')
+    explainer     = lime.lime_tabular.LimeTabularExplainer(saved_x_train.values, feature_names=feature_names, class_names=['non_critical','critical'], mode='classification')
+    exp           = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
     exp.save_to_file('./assets/images/explainer.html', labels=None, predict_proba=True, show_predicted_value=True)
     #exp.savefig("./assets/images/confusion_matrix.jpg")
     #s_html(labels=None, predict_proba=True, show_predicted_value=True, **kwargs)
