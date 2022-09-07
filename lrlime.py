@@ -53,13 +53,22 @@ def initializtion():
 
     df.head()
 
+    print(df)
+
     """DEFINE FEATURES AND TARGET"""
 
     x = df.loc[:, df.columns != 'Class']
     encoder = OneHotEncoder(sparse=False)
     # transform data
+    x = x[~df.isnan(x)]
+    print(x)
+    
+    
+
+    x= np.nan_to_num(x)
+    
    
-    X_encode      = encoder.fit_transform(x)
+    X_encode         = encoder.fit_transform(x)
     X = preprocessing.normalize(X_encode)
 
    
