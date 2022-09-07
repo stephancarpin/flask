@@ -23,13 +23,13 @@ app.testing= True
 app.config['SECRET_KEY'] = 'b1808f24613321f9007f0e8b31759bc269e8fc6a6a2fb51d'
 
 
+initializtion()
 
 
 
+csv_data= pd.read_csv('./data/DyeBatch.csv',header=0)
 
-csv_data= pd.read_csv('./data/CriticalColours.csv',header=0)
-
-headers = csv_data.columns[0:19]
+headers = csv_data.columns[0:7]
 
 
 

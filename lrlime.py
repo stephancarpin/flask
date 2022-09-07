@@ -33,9 +33,9 @@ def initializtion():
     print('Initialization - Train Model(Machine learning classification)')
     
     #FROM HTML
-    df= pd.read_csv('./data/CriticalColours.csv',header=0)
+    df= pd.read_csv('./data/DyeBatch.csv',header=0)
 
-    headers = df.columns[0:19]
+    headers = df.columns[0:7]
 
     # Machine learning classification
     """READ DATA"""
@@ -46,7 +46,7 @@ def initializtion():
 
     """DEFINE FEATURES AND TARGET"""
 
-    X = df.loc[:, df.columns != 'Class']
+    X = df.loc[:, df.columns != 'Reprocess']
 
     Y = df.iloc[:,-1]
 
@@ -57,7 +57,7 @@ def initializtion():
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=7)
 
     #to save it
-    np.save('xtrain.npy', X_train)
+    #np.save('xtrain.npy', X_train)
 
     
     
@@ -147,10 +147,10 @@ def perform_task_LR(array_inputs,df):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=7)
    
     
-    explainer = lime.lime_tabular.LimeTabularExplainer(X_train.values, feature_names=feature_names, class_names=class_names, discretize_continuous=True)
-    exp = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
-    exp.save_to_file('./assets/images/explainer.html', labels=None, predict_proba=True, show_predicted_value=True)
-    #exp.savefig("./assets/images/confusion_matrix.jpg")
+    # explainer = lime.lime_tabular.LimeTabularExplainer(X_train.values, feature_names=feature_names, class_names=class_names, discretize_continuous=True)
+    # exp = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
+    # exp.save_to_file('./assets/images/explainer.html', labels=None, predict_proba=True, show_predicted_value=True)
+    # #exp.savefig("./assets/images/confusion_matrix.jpg")
     #s_html(labels=None, predict_proba=True, show_predicted_value=True, **kwargs)
     """INTERPRETE PREDICTION"""
     return([model_logreg.predict(arr_2d),X_input_test])
