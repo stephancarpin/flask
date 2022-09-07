@@ -41,9 +41,9 @@ initializtion()
 
 
 
-csv_data= pd.read_csv('./data/DyeBatch.csv',header=0)
+csv_data= pd.read_csv('./data/Kniting.csv',header=0)
 
-headers = csv_data.columns[0:7]
+headers = csv_data.columns[0:11]
 
 
 

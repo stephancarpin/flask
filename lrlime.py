@@ -22,6 +22,13 @@ from sklearn.metrics import classification_report, confusion_matrix
 import matplotlib
 import matplotlib.pyplot as plt
 import pickle as pkl
+from sklearn.impute import SimpleImputer
+preprocessor = SimpleImputer(missing_values=np.nan, strategy='mean')
+from sklearn import preprocessing
+
+
+from sklearn.preprocessing import OneHotEncoder
+
 
 plt.switch_backend('Agg')
 print("Using:",matplotlib.get_backend())
@@ -31,11 +38,13 @@ model_logreg = LogisticRegression()
 
 def initializtion():
     print('Initialization - Train Model(Machine learning classification)')
+
+
+   
     
     #FROM HTML
-    df= pd.read_csv('./data/DyeBatch.csv',header=0)
-
-    headers = df.columns[0:7]
+    df= pd.read_csv('./data/Kniting.csv',header=0)
+    
 
     # Machine learning classification
     """READ DATA"""
@@ -46,7 +55,16 @@ def initializtion():
 
     """DEFINE FEATURES AND TARGET"""
 
-    X = df.loc[:, df.columns != 'Reprocess']
+    x = df.loc[:, df.columns != 'Class']
+    encoder = OneHotEncoder(sparse=False)
+    # transform data
+   
+    X_encode      = encoder.fit_transform(x)
+    X = preprocessing.normalize(X_encode)
+
+   
+
+    headers = df.columns[0:11]
 
     Y = df.iloc[:,-1]
 
@@ -57,13 +75,9 @@ def initializtion():
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.30, random_state=7)
 
     #to save it
-<<<<<<< HEAD
-    #np.save('xtrain.npy', X_train)
-=======
-    print('type of xtrain')
 
     X_train.to_json('./data/X_train.json')
->>>>>>> lime
+
 
     
     
@@ -113,21 +127,20 @@ def perform_task_LR(array_inputs,df):
     #print(new_colour)
     X_input_test = np.array(array_inputs)
     X_input_test = X_input_test.astype(np.float64)
-    arr_2d       = np.reshape(X_input_test,[1,19])
+    arr_2d       = np.reshape(X_input_test,[0,7])
     
    
 
-    import lime
-    import lime.lime_tabular
-    feature_names = ['EverzolYellow3RS', 'EverzolYellowLX', 'EverzolYellowEDR', 'EverzolYellowED', 'EverzolYellowED2G', 'EverzolRedLX', 'EverzolRedF2B', 'EverzolRedED3B', 'EverzolRedED', 'EverzolBlueLX', 'EverzolBlueBRF', 'EverzolBlueEDG', 'EverzolNavyBlueFBN', 'EverzolNavyED', 'RemazolRoyalRGB', 'LevafixBlueCA', 'EverzolOrangeED2R', 'EverzolTurquoise133%', 'EverzolBlackEDR']
+    # import lime
+    # import lime.lime_tabular
+    # feature_names = ['EverzolYellow3RS', 'EverzolYellowLX', 'EverzolYellowEDR', 'EverzolYellowED', 'EverzolYellowED2G', 'EverzolRedLX', 'EverzolRedF2B', 'EverzolRedED3B', 'EverzolRedED', 'EverzolBlueLX', 'EverzolBlueBRF', 'EverzolBlueEDG', 'EverzolNavyBlueFBN', 'EverzolNavyED', 'RemazolRoyalRGB', 'LevafixBlueCA', 'EverzolOrangeED2R', 'EverzolTurquoise133%', 'EverzolBlackEDR']
 
 
-    saved_x_train = pd.read_json('./data/X_train.json')
-    explainer     = lime.lime_tabular.LimeTabularExplainer(saved_x_train.values, feature_names=feature_names, class_names=['non_critical','critical'], mode='classification')
-    exp           = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
-    exp.save_to_file('./assets/images/explainer.html', labels=None, predict_proba=True, show_predicted_value=True)
-    #exp.savefig("./assets/images/confusion_matrix.jpg")
-    #s_html(labels=None, predict_proba=True, show_predicted_value=True, **kwargs)
+    # saved_x_train = pd.read_json('./data/X_train.json')
+    # explainer     = lime.lime_tabular.LimeTabularExplainer(saved_x_train.values, feature_names=feature_names, class_names=['non_critical','critical'], mode='classification')
+    # exp           = explainer.explain_instance(X_input_test,model_logreg.predict_proba,num_features=19,top_labels=1)
+    # exp.save_to_file('./assets/images/explainer.html', labels=None, predict_proba=True, show_predicted_value=True)
+    
     """INTERPRETE PREDICTION"""
     return([model_logreg.predict(arr_2d),X_input_test])
 
